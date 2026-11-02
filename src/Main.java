@@ -1,24 +1,26 @@
-/** Punto de entrada: crea objetos y comprueba sus métodos. */
+import java.time.LocalDate;
+/** Programa principal que instancia y prueba las clases derivadas. */
 public class Main {
     public static void main(String[] args) {
-        // Instanciación mediante constructores.
-        Producto teclado = new Producto("Teclado", 350.00, 10);
-        Producto mouse = new Producto("Mouse", 180.00, 15);
         Inventario inventario = new Inventario();
-
-        // Registrar los objetos creados.
+        ProductoElectronico teclado = new ProductoElectronico("Teclado", 350, 10, 12);
+        ProductoElectronico mouse = new ProductoElectronico("Mouse", 180, 15, 6);
+        ProductoPerecedero alimento = new ProductoPerecedero("Alimento", 50, 8, LocalDate.now().plusDays(30));
+        ProductoPerecedero caducado = new ProductoPerecedero("Lote caducado", 20, 5, LocalDate.now().minusDays(1));
+        teclado.agregarExistencias(5); // Metodo heredado de Producto.
+        boolean ventaMouse = mouse.vender(3); // Metodo heredado.
+        boolean ventaSinStock = mouse.vender(100);
+        boolean ventaCaducado = caducado.vender(1); // Metodo sobrescrito.
         inventario.agregarProducto(teclado);
         inventario.agregarProducto(mouse);
-
-        // Prueba de métodos: ingresar y vender unidades.
-        teclado.agregarExistencias(5);
-        boolean ventaExitosa = mouse.vender(3);
-        boolean ventaRechazada = mouse.vender(100);
-
-        System.out.println("=== SISTEMA DE INVENTARIO ===");
-        inventario.mostrarProductos();
-        System.out.println("Venta de 3 mouse: " + ventaExitosa);
-        System.out.println("Venta de 100 mouse: " + ventaRechazada);
+        inventario.agregarProducto(alimento);
+        inventario.agregarProducto(caducado);
+        System.out.println("=== SISTEMA DE INVENTARIO: HERENCIA ===");
+        inventario.mostrarProductos(); // Polimorfismo: cada subclase define detalle propio.
+        System.out.println("Venta de 3 mouse: " + ventaMouse);
+        System.out.println("Venta de 100 mouse: " + ventaSinStock);
+        System.out.println("Venta de lote caducado: " + ventaCaducado);
+        System.out.println("Teclado tiene garantia: " + teclado.tieneGarantia());
         System.out.printf("Valor total: $%.2f%n", inventario.calcularValorTotal());
     }
 }
