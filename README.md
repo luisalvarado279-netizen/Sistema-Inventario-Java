@@ -1,38 +1,29 @@
-# Sistema de Inventario en Java
+# Sistema de Inventario Java — Actividad Formativa 3: Herencia
 
-Actividad formativa 2: desarrollo de una aplicación simple con clases, atributos, objetos, constructores y métodos.
+Continuación del proyecto de la Actividad Formativa 2 de Programación Orientada a Objetos, Universidad Ciudadana de Nuevo León.
 
 ## Requisitos
-Java JDK 11 o superior. No requiere librerías externas.
+Java JDK 11 o superior, sin bibliotecas externas.
 
-## Cómo ejecutar
-Desde la carpeta raíz:
+## Compilar y ejecutar
+Desde la raíz del repositorio:
 
 ```bash
 javac -d out src/*.java
 java -cp out Main
+java -cp out Pruebas
 ```
 
-En Windows con PowerShell puedes usar `javac -d out src/*.java` y `java -cp out Main`.
+## Clases y herencia
+- `Producto`: clase base; nombre, precio, existencias, ventas, valor y método `mostrarDetalle()`.
+- `ProductoElectronico extends Producto`: agrega meses de garantía, `tieneGarantia()` y sobrescribe `mostrarDetalle()`.
+- `ProductoPerecedero extends Producto`: agrega fecha de caducidad y sobrescribe `vender()` y `mostrarDetalle()`.
+- `Inventario`: registra instancias de `Producto` y subclases; demuestra polimorfismo.
+- `Main`: crea las clases derivadas y comprueba sus operaciones.
+- `Pruebas`: ocho comprobaciones automáticas ejecutables sin dependencias.
 
-## Arquitectura
-- `Producto`: encapsula nombre, precio y existencias; permite agregar unidades, vender y calcular el valor individual.
-- `Inventario`: almacena productos, los muestra y calcula el valor total.
-- `Main`: instancia objetos y prueba las operaciones.
+## Relación con la Actividad 2
+Conserva la clase base `Producto`, las operaciones de existencias, venta, cálculo de valor, la clase `Inventario` y el método `Main`. Agrega derivación, reutilización mediante `super`, sobrescritura con `@Override` y métodos propios.
 
-## Resultado esperado
-```text
-=== SISTEMA DE INVENTARIO ===
-Teclado | $350.00 | unidades: 15 | valor: $5250.00
-Mouse | $180.00 | unidades: 12 | valor: $2160.00
-Venta de 3 mouse: true
-Venta de 100 mouse: false
-Valor total: $7410.00
-```
-
-## Conceptos aplicados
-- Declaración de clases y atributos privados
-- Instanciación de objetos mediante constructores
-- Métodos de consulta, modificación y validación
-- Comentarios de documentación en el código
-- Pruebas de ventas válidas y rechazadas
+## Evidencias pendientes de integrar en el informe
+Capturas reales del IDE y ejecución, presentación en sesión en línea y enlace a la grabación. Esta rama contiene el código y las pruebas; la grabación no está incluida.
