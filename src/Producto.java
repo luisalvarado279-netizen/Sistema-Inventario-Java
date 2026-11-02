@@ -1,45 +1,32 @@
-/** Representa un producto con nombre, precio y existencias. */
+/** Clase base que encapsula los datos y operaciones comunes de cualquier producto. */
 public class Producto {
-    private String nombre;
-    private double precio;
+    private final String nombre;
+    private final double precio;
     private int existencias;
 
-    /** Inicializa un producto con datos válidos. */
     public Producto(String nombre, double precio, int existencias) {
-        if (nombre == null || nombre.isBlank()) throw new IllegalArgumentException("Nombre obligatorio");
-        if (precio < 0 || existencias < 0) throw new IllegalArgumentException("Precio y existencias no pueden ser negativos");
+        if (nombre == null || nombre.trim().isEmpty()) throw new IllegalArgumentException("Nombre obligatorio");
+        if (!Double.isFinite(precio) || precio < 0 || existencias < 0) throw new IllegalArgumentException("Precio o existencias invalidos");
         this.nombre = nombre;
         this.precio = precio;
         this.existencias = existencias;
     }
-
-    /** Regresa el nombre del producto. */
     public String getNombre() { return nombre; }
-
-    /** Regresa las existencias disponibles. */
+    public double getPrecio() { return precio; }
     public int getExistencias() { return existencias; }
-
-    /** Calcula el valor monetario del inventario del producto. */
-    public double calcularValorInventario() { return precio * existencias; }
-
-    /** Agrega unidades al inventario. */
-    public void agregarExistencias(int cantidad) {
-        if (cantidad <= 0) throw new IllegalArgumentException("La cantidad debe ser positiva");
-        existencias += cantidad;
+    public void agregarExistencias(int unidades) {
+        if (unidades <= 0) throw new IllegalArgumentException("Las unidades deben ser positivas");
+        existencias += unidades;
     }
-
-    /** Retira unidades sin permitir inventario negativo. */
-    public boolean vender(int cantidad) {
-        if (cantidad <= 0) throw new IllegalArgumentException("La cantidad debe ser positiva");
-        if (cantidad > existencias) return false;
-        existencias -= cantidad;
+    public boolean vender(int unidades) {
+        if (unidades <= 0) throw new IllegalArgumentException("Las unidades deben ser positivas");
+        if (unidades > existencias) return false;
+        existencias -= unidades;
         return true;
     }
-
-    /** Retorna una descripción para mostrar en consola. */
-    @Override
-    public String toString() {
-        return String.format("%s | $%.2f | unidades: %d | valor: $%.2f",
-                nombre, precio, existencias, calcularValorInventario());
+    public double calcularValorInventario() { return precio * existencias; }
+    /** Punto de extension: las subclases pueden sobrescribir esta descripcion. */
+    public String mostrarDetalle() {
+        return String.format("%s | $%.2f | unidades: %d | valor: $%.2f", nombre, precio, existencias, calcularValorInventario());
     }
 }
